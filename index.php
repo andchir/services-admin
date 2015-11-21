@@ -1,33 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin</title>
+<?php
+
+//ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$app = new Silex\Application();
+$app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+    'db.options' => include __DIR__ . '/config.inc.php'
+));
+$app['debug'] = false;
+$app['session.storage.handler'] = null;
+
+$app->match('/auth', function (Silex\Application $app) {
     
-    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    if( $app['session']->get('user_id') !== null ){
+        return $app->redirect($app["request"]->getBaseUrl());
+    }
     
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    $data = array();
+    $data['username'] = $app['request']->get('username');
+    $data['password'] = $app['request']->get('password');
+    $data['errors'] = array();
     
-    
-</head>
-<body>
-    <div class="container">
+    if( $data['username'] && $data['password'] ){
         
-        <?php
+        $sql = 'SELECT * FROM users WHERE username = ?';
+        $user = $app['db']->fetchAssoc($sql, array($data['username']));
         
-        include __DIR__ . '/bootstrap.php';
+        if( $user === false ) {
+            $data['errors'][] = 'Неправильное имя пользователя или пароль.';
+        }
+        else {
+            
+            if( password_verify($data['password'], $user['password']) ){
+                $app['session']->set('user_id', $user['id']);
+                return $app->redirect($app["request"]->getBaseUrl());
+            }
+            else {
+                $data['errors'][] = 'Неправильное имя пользователя или пароль.';
+            }
+            
+        }
         
-        ?>
-        
-    </div>
+    }
     
-    </body>
-</html>
+    include __DIR__ . '/templates/auth.tpl.php';
+    
+    return '';
+
+})
+->method('GET|POST');
+
+$app->get('/', function (Silex\Application $app) {
+    
+    if( $app['session']->get('user_id') === null ){
+        return $app->redirect( $app["request"]->getBaseUrl() . '/auth' );
+    }
+    
+    include __DIR__ . '/templates/page.tpl.php';
+    
+    return '';
+
+});
+
+$app->get('/logout', function (Silex\Application $app) {
+    $app['session']->set('user_id', null);
+    return $app->redirect( $app["request"]->getBaseUrl() . '/auth' );
+});
+
+$app->run();
