@@ -1,0 +1,16 @@
+{
+  "name": "services-admin",
+  "version": "0.1",
+  "authors": [
+    "andchir <andchir@gmail.com>"
+  ],
+  "main": "",
+  "license": "",
+  "homepage": "",
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7",
+    "angular-sanitize": "~1.4.7"
+  },
+  "keywords": []
+}
