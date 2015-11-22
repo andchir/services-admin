@@ -13,6 +13,11 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app['debug'] = false;
 $app['session.storage.handler'] = null;
 
+/**
+ * Get services list
+ * @param object app
+ * @returns string
+ */
 $app->get('/items/getlist', function (Silex\Application $app) {
     
     if( $app['session']->get('user_id') === null ){
@@ -26,6 +31,11 @@ $app->get('/items/getlist', function (Silex\Application $app) {
 
 });
 
+/**
+ * Save new service item
+ * @param object app
+ * @returns string
+ */
 $app->post('/items/save', function (Silex\Application $app) {
     
     if( $app['session']->get('user_id') === null ){
