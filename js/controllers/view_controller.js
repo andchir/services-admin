@@ -74,13 +74,17 @@ app
          */
         ctlr.removeService = function(){
             
-            var result = ServiceItem.remove({ itemIdp: ctlr.data.selectedIdp });
-            result.$promise.then(function(data) {
-                if(data.success){
-                    getServicesList();
-                }
-                ctlr.data.selectedIdp = null;
-            });
+            if ( confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + ctlr.data.selectedIdp + '?' ) ) {
+                
+                var result = ServiceItem.remove({ itemIdp: ctlr.data.selectedIdp });
+                result.$promise.then(function(data) {
+                    if(data.success){
+                        getServicesList();
+                    }
+                    ctlr.data.selectedIdp = null;
+                });
+                
+            }
             
         };
         

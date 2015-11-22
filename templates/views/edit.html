@@ -1,7 +1,178 @@
-<div class="row">
-    <div class="col-md-12">
+<form id="editForm" name="editForm" role="form" action="" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            
+            <div class="row">
+                <div class="col-xs-6">
+                    
+                    <div class="form-group">
+                        <label class="control-label" for="editFormInputLogin">Login:</label>
+                        <input type="text" class="form-control" id="editFormInputLogin" name="login" ng-model="edit.data.service.login">
+                    </div>
+                    
+                </div>
+                <div class="col-xs-6">
+                    
+                    <div class="form-group">
+                        <label class="control-label" for="editFormInputEmail">E-mail тех. поддержки:</label>
+                        <input type="text" class="form-control" id="editFormInputEmail" name="login" ng-model="edit.data.service.email">
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputCalcRate">Тип расчета курса:</label>
+                <select class="form-control" id="editFormInputCalcRate" name="calc_rate_type" ng-model="edit.data.service.calc_rate_type">
+                    <option value="daily">Ежедневный</option>
+                    <option value="monthly">Помесячный</option>
+                </select>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            
+            <label class="control-label">IDP партнера:</label>
+            <input type="number" class="form-control" id="editFormInputIdp" name="idp" ng-model="edit.data.service.idp" disabled>
+            
+        </div>
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputBank">Банк, у которого берутся курсы:</label>
+                <select class="form-control" id="editFormInputBank" name="bank" ng-model="edit.data.service.bank">
+                    <option value="CBRF">CBRF</option>
+                    <option value="VTB">VTB</option>
+                </select>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputDLRMethod">Метод получения DLR:</label>
+                <select class="form-control" id="editFormInputDLRMethod" name="dlr_method" ng-model="edit.data.service.dlr_method">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                </select>
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputMinBalance">Минимальный баланс для отправки нотификаций:</label>
+                <input type="number" class="form-control" id="editFormInputMinBalance" name="min_balance" ng-model="edit.data.service.min_balance">
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputDLRData">Набор данных в DLR:</label>
+                <select class="form-control" id="editFormInputDLRData" name="dlr_data" ng-model="edit.data.service.dlr_data">
+                    <option value="smpp">smpp</option>
+                    <option value="smt">smt</option>
+                </select>
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label">
+                    Текущий баланс:
+                    &nbsp;
+                    <span class="font-big" ng-bind="edit.data.service.balance"></span>
+                </label>
+                
+                <table class="table">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="30%">
+                        <col width="20%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Начислено</th>
+                            <th>Валюта</th>
+                            <th>Комментарий</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                2014-11-12 15:21
+                            </td>
+                            <td>
+                                100
+                            </td>
+                            <td>
+                                RUB
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                <input type="number" class="form-control input-sm" name="payment_value">
+                            </td>
+                            <td>
+                                <select class="form-control input-sm" id="editFormInputCurrency" name="payment_currency">
+                                    <option value="RUB">RUB</option>
+                                    <option value="USD">USD</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control input-sm" name="payment_comment">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputUrl">URL для уведомления о статусе SMS:</label>
+                <input type="text" class="form-control" id="editFormInputUrl" name="url" ng-model="edit.data.service.url">
+            </div>
+            
+        </div>
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label class="control-label" for="editFormInputCreditLimit">Кредитный лимит партнера:</label>
+                <input type="number" class="form-control" id="editFormInputCreditLimit" name="credit_limit" ng-model="edit.data.service.credit_limit">
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="pull-right">
         
-        
+        <a href="#/" class="btn btn-default">Назад</a>
+        <button type="button" class="btn btn-success" ng-click="edit.saveData()">Сохранить</button>
         
     </div>
-</div>
+    
+</form>

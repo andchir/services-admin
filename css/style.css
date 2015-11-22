@@ -1,4 +1,7 @@
 
 body { padding: 30px; background-color: #eee; }
 h1 { color: #1C80D8; }
+.font-big { font-size: 140%; }
 .panel-auth { margin-top: 100px; }
+
+
