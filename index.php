@@ -13,6 +13,10 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app['debug'] = false;
 $app['session.storage.handler'] = null;
 
+/**
+ * Authorization
+ *
+ */
 $app->match('/auth', function (Silex\Application $app) {
     
     if( $app['session']->get('user_id') !== null ){
@@ -53,6 +57,10 @@ $app->match('/auth', function (Silex\Application $app) {
 })
 ->method('GET|POST');
 
+/**
+ * Application main page
+ *
+ */
 $app->get('/', function (Silex\Application $app) {
     
     if( $app['session']->get('user_id') === null ){
@@ -65,6 +73,10 @@ $app->get('/', function (Silex\Application $app) {
 
 });
 
+/**
+ * Logout
+ *
+ */
 $app->get('/logout', function (Silex\Application $app) {
     $app['session']->set('user_id', null);
     return $app->redirect( $app["request"]->getBaseUrl() . '/auth' );
