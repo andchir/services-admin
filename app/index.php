@@ -1,14 +1,15 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../config.inc.php';
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-    'db.options' => include __DIR__ . '/../config.inc.php'
+    'db.options' => $config['db']
 ));
 $app['debug'] = false;
 $app['session.storage.handler'] = null;

@@ -29,9 +29,13 @@
 </head>
 <body ng-app="servicesApp">
     <div class="container">
-
+        
         <div class="panel panel-default">
             <div class="panel-body">
+                
+                <div class="pull-right">
+                    <a href="<?php echo $_SERVER['REQUEST_URI']; ?>logout">Выйти</a>
+                </div>
                 
                 <h1>SO-Admin Bulk service Edit</h1>
                 
