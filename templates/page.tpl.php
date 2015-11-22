@@ -13,18 +13,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="lib/angular/angular.min.js"></script>
-    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="lib/angular-route/angular-route.min.js"></script>
-    <script src="lib/angular-resource/angular-resource.min.js"></script>
-    
-    <script src="js/services.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/controllers/main_controller.js"></script>
-    <script src="js/controllers/view_controller.js"></script>
-    <script src="js/controllers/edit_controller.js"></script>
+    <script src="js/dist/app_all.js"></script>
     
 </head>
 <body ng-app="servicesApp">
