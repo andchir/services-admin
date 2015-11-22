@@ -15,10 +15,19 @@
     
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="lib/angular-route/angular-route.min.js"></script>
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
     
+    <script src="js/services.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers/main_controller.js"></script>
+    <script src="js/controllers/view_controller.js"></script>
+    <script src="js/controllers/edit_controller.js"></script>
     
 </head>
-<body>
+<body ng-app="servicesApp">
     <div class="container">
 
         <div class="panel panel-default">
@@ -30,72 +39,11 @@
                 
                 <hr>
                 
-                <div class="row">
-                    <div class="col-md-6">
-                        
-                        <h5>Добавить новый сервис</h5>
-                        
-                        <form id="addForm" role="form" action="<?php echo $app["request"]->getBaseUrl(); ?>" method="post">
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    
-                                    <div class="form-group">
-                                        <label for="createFormInputIDP">IDP:</label>
-                                        <input type="number" class="form-control" id="createFormInputIDP">
-                                    </div>
-                                    
-                                </div>
-                                <div class="col-md-6">
-                                    
-                                    <div class="form-group">
-                                        <label for="createFormInputLogin">Login:</label>
-                                        <input type="text" class="form-control" id="createFormInputLogin">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary">Создать</button>
-                                </div>
-                            </div>
-                            
-                        </form>
-                        
-                    </div>
-                    <div class="col-md-6">
-                        
-                        <h5>Удалить севис по IDP</h5>
-                        
-                        <form id="removeForm" role="form" action="<?php echo $app["request"]->getBaseUrl(); ?>" method="post">
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    
-                                    <div class="form-group">
-                                        <label for="createFormInputIDP">IDP:</label>
-                                        <select class="form-control">
-                                            
-                                        </select>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-danger">Удалить</button>
-                                </div>
-                            </div>
-                            
-                        </form>
-                        
-                    </div>
+                <div ng-controller="MainController">
+                    
+                    <div ng-view></div>
+                    
                 </div>
-                
-                <hr>
-                
-                
                 
             </div>
         </div>

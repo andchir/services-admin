@@ -10,7 +10,45 @@ $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => include __DIR__ . '/../config.inc.php'
 ));
-$app['debug'] = true;
+$app['debug'] = false;
 $app['session.storage.handler'] = null;
+
+$app->get('/items/getlist', function (Silex\Application $app) {
+    
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+    }
+    
+    $sql = 'SELECT * FROM services';
+    $result = $app['db']->fetchAll($sql);
+    
+    return $app->json($result);
+
+});
+
+$app->post('/items/save', function (Silex\Application $app) {
+    
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+    }
+    
+    $content = json_decode($app['request']->getContent(), true);
+    
+    $data = array();
+    $data['idp'] = !empty($content['idp']) ? $content['idp'] : '';
+    $data['login'] = !empty($content['login']) ? $content['login'] : '';
+    
+    $insert = $app['db']->insert('services', array(
+        'idp' => $data['idp'],
+        'login' => $data['login']
+    ));
+    
+    $result = array(
+        'success' => $insert !== false
+    );
+    
+    return $app->json($result);
+
+});
 
 $app->run();

@@ -1,0 +1,138 @@
+<div class="row">
+    <div class="col-md-6">
+        
+        <h5>Добавить новый сервис</h5>
+        
+        <form id="addForm" name="addForm" role="form" action="" method="post">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    <div class="form-group">
+                        <label class="control-label" for="createFormInputIDP">IDP:</label>
+                        <input type="number" class="form-control" id="createFormInputIDP" name="newIdp" ng-model="view.data.newIdp" required>
+                    </div>
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                    <div class="form-group">
+                        <label class="control-label" for="createFormInputLogin">Login:</label>
+                        <input type="text" class="form-control" id="createFormInputLogin" name="newLogin" ng-model="view.data.newLogin" required>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary" ng-disabled="!addForm.$valid" ng-click="view.addService()">Создать</button>
+                </div>
+            </div>
+            
+        </form>
+        
+    </div>
+    <div class="col-md-6">
+        
+        <h5>Удалить севис по IDP</h5>
+        
+        <form id="removeForm" name="removeForm" role="form" action="" method="post">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    <div class="form-group">
+                        <label for="createFormInputIDP">IDP:</label>
+                        <select class="form-control" name="selectedDdp" ng-model="view.data.selectedId" required>
+                            <option value="">-</option>
+                            <option ng-value="item.id" ng-repeat="item in view.data.servicesList" ng-bind="item.idp"></option>
+                        </select>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger" ng-disabled="!removeForm.$valid" ng-click="view.removeService()">Удалить</button>
+                </div>
+            </div>
+            
+        </form>
+        
+    </div>
+</div>
+
+<hr>
+
+<h5>Поиск</h5>
+
+<form id="searchForm" role="form" action="" method="post">
+    <div class="row">
+        <div class="col-md-3 form-group">
+            
+            <select class="form-control">
+                <option value="idp">IDP</option>
+            </select>
+            
+        </div>
+        <div class="col-md-3 form-group">
+            
+            <input type="text" class="form-control">
+            
+        </div>
+        <div class="col-md-3 form-group">
+            
+            <button type="button" class="btn btn-primary">Искать</button>
+            
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-12">
+        
+        <div class="table-responsive">
+            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Login
+                        </th>
+                        <th>
+                            IDP
+                        </th>
+                        <th>
+                            Баланс
+                        </th>
+                        <th>
+                            E-mail для тех. поддержки
+                        </th>
+                        <th>
+                            Действия
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in view.data.servicesList">
+                        <td ng-bind="item.id"></td>
+                        <td ng-bind="item.login"></td>
+                        <td ng-bind="item.idp"></td>
+                        <td ng-bind="item.balance"></td>
+                        <td ng-bind="item.email"></td>
+                        <td class="text-center">
+                            <a class="btn btn-warning btn-sm" href="#edit/{{item.id}}">
+                                Редактировать
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+        
+    </div>
+</div>
