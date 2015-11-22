@@ -14,6 +14,11 @@ app
                 controller: 'ViewController',
                 controllerAs: 'view'
             })
+            .when('/view/:page', {
+                templateUrl: 'templates/views/view.html',
+                controller: 'ViewController',
+                controllerAs: 'view'
+            })
             .when('/edit/:itemId', {
                 templateUrl: 'templates/views/edit.html',
                 controller: 'EditController',

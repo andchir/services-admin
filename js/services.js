@@ -6,16 +6,21 @@
 angular.module('apiServices', ['ngResource'])
 .factory('ServiceItem', ['$resource',
     function($resource){
-        return $resource('app/items/:action', {}, {
+        return $resource('app/items/:page', {}, {
             query: {
                 method: 'GET',
-                params: {action: 'getlist'},
-                isArray: true
+                params: {
+                    page: 1
+                },
+                isArray: false
             },
             save: {
                 method: 'POST',
-                params: {action: 'save'},
                 isArray: false
+            },
+            remove: {
+                url: 'app/items/:itemIdp',
+                method: 'DELETE'
             }
         });
     }

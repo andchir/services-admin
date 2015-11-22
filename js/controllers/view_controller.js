@@ -10,10 +10,39 @@ app
         var ctlr = this;
         
         ctlr.data = {
-            servicesList: ServiceItem.query(),
+            servicesList: [],
             newIdp: null,
             newLogin: null,
-            selectedId: null
+            selectedIdp: null,
+            currentPage: $routeParams.page ? parseInt($routeParams.page) : 1,
+            pageSize: 10,
+            numberOfPages: 1,
+            nextPage: 1,
+            previousPage: 1
+        };
+        
+        /**
+         * Get items list
+         *
+         */
+        var getServicesList = function(){
+            
+            ServiceItem.query({ page: ctlr.data.currentPage })
+                .$promise.then(function(resporse) {
+                    if ( resporse.data ) {
+                        ctlr.data.servicesList = resporse.data;
+                    }
+                    if ( resporse.total ) {
+                        ctlr.data.numberOfPages = Math.ceil(resporse.total /  ctlr.data.pageSize);
+                        ctlr.data.nextPage = ctlr.data.currentPage < ctlr.data.numberOfPages
+                            ? ctlr.data.currentPage + 1
+                            : ctlr.data.currentPage;
+                        ctlr.data.previousPage = ctlr.data.currentPage > 1
+                            ? ctlr.data.currentPage - 1
+                            : 1;
+                    }
+                });
+            
         };
         
         /**
@@ -31,8 +60,10 @@ app
             
             result.$promise.then(function(data) {
                 if(data.success){
-                    ctlr.data.servicesList = ServiceItem.query();
+                    getServicesList();
                 }
+                ctlr.data.newIdp = null;
+                ctlr.data.newLogin = null;
             });
             
         };
@@ -43,9 +74,17 @@ app
          */
         ctlr.removeService = function(){
             
-            console.log( 'removeService', ctlr.data.selectedId );
+            var result = ServiceItem.remove({ itemIdp: ctlr.data.selectedIdp });
+            result.$promise.then(function(data) {
+                if(data.success){
+                    getServicesList();
+                }
+                ctlr.data.selectedIdp = null;
+            });
             
         };
+        
+        getServicesList();
         
     }
 ]);

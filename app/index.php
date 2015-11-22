@@ -15,17 +15,36 @@ $app['session.storage.handler'] = null;
 
 /**
  * Get services list
- * @param object app
+ * @param object $app
+ * @param int $page
  * @returns string
  */
-$app->get('/items/getlist', function (Silex\Application $app) {
+$app->get('/items/{page}', function (Silex\Application $app, $page) {
     
     if( $app['session']->get('user_id') === null ){
         $app->abort(403, "Request is not allowed.");
     }
     
-    $sql = 'SELECT * FROM services';
-    $result = $app['db']->fetchAll($sql);
+    $pageSize = 10;
+    $page = intval($page);
+    
+    $qb = $app['db']->createQueryBuilder()
+        ->select('*')
+        ->from('services')
+        ->setFirstResult($pageSize * ($page - 1))
+        ->setMaxResults($pageSize);
+    $data = $qb->execute()->fetchAll();
+    
+    $total_q = $app['db']->createQueryBuilder()
+        ->select('count(*)')
+        ->from('services')
+        ->execute()
+        ->fetch();
+    
+    $total = intval(current($total_q));
+    
+    $result['data'] = $data;
+    $result['total'] = $total;
     
     return $app->json($result);
 
@@ -33,10 +52,10 @@ $app->get('/items/getlist', function (Silex\Application $app) {
 
 /**
  * Save new service item
- * @param object app
+ * @param object $app
  * @returns string
  */
-$app->post('/items/save', function (Silex\Application $app) {
+$app->post('/items', function (Silex\Application $app) {
     
     if( $app['session']->get('user_id') === null ){
         $app->abort(403, "Request is not allowed.");
@@ -59,6 +78,28 @@ $app->post('/items/save', function (Silex\Application $app) {
     
     return $app->json($result);
 
+});
+
+/**
+ * Delete service item 
+ * @param int $itemIdp
+ * @returns string
+ */
+$app->delete('/items/{itemIdp}', function (Silex\Application $app, $itemIdp) {
+    
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+    }
+    
+    $itemIdp = trim($itemIdp);
+    $delete = $app['db']->delete('services', array('idp' => $itemIdp));
+    
+    $result = array(
+        'success' => $delete != false
+    );
+    
+    return $app->json($result);
+    
 });
 
 $app->run();

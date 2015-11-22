@@ -43,10 +43,7 @@
                     
                     <div class="form-group">
                         <label for="createFormInputIDP">IDP:</label>
-                        <select class="form-control" name="selectedDdp" ng-model="view.data.selectedId" required>
-                            <option value="">-</option>
-                            <option ng-value="item.id" ng-repeat="item in view.data.servicesList" ng-bind="item.idp"></option>
-                        </select>
+                        <input type="number" class="form-control" name="selectedIdp" ng-model="view.data.selectedIdp" required>
                     </div>
                     
                 </div>
@@ -72,6 +69,7 @@
             
             <select class="form-control">
                 <option value="idp">IDP</option>
+                <option value="login">Login</option>
             </select>
             
         </div>
@@ -93,7 +91,7 @@
         
         <div class="table-responsive">
             
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th>
@@ -133,6 +131,18 @@
             </table>
             
         </div>
+        
+        <nav>
+            <ul class="pager">
+                <li class="previous" ng-class="{'disabled': view.data.currentPage <= 1}">
+                    <a ng-href="#/view/{{view.data.previousPage}}">Предыдущая</a>
+                </li>
+                <li>{{view.data.currentPage}}/{{view.data.numberOfPages}}</li>
+                <li class="next" ng-class="{'disabled': view.data.currentPage >= view.data.numberOfPages}">
+                    <a ng-href="#/view/{{view.data.nextPage}}">Следующая</a>
+                </li>
+            </ul>
+        </nav>
         
     </div>
 </div>
