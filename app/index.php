@@ -1,7 +1,7 @@
 <?php
 
-//ini_set('display_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config.inc.php';
@@ -14,11 +14,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 $app['debug'] = false;
 $app['session.storage.handler'] = null;
 
-if( $app['session']->get('user_id') === null ){
-    $app->abort(403, "Request is not allowed.");
-    exit;
-}
-
 /**
  * Get services list
  * @param object $app
@@ -26,6 +21,11 @@ if( $app['session']->get('user_id') === null ){
  * @returns string
  */
 $app->get('/items/{page}', function (Silex\Application $app, $page) {
+    
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+        exit;
+    }
     
     $pageSize = 10;
     $page = intval($page);
@@ -60,6 +60,11 @@ $app->get('/items/{page}', function (Silex\Application $app, $page) {
  */
 $app->post('/items', function (Silex\Application $app) {
     
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+        exit;
+    }
+    
     $content = json_decode($app['request']->getContent(), true);
     
     $data = array();
@@ -86,6 +91,11 @@ $app->post('/items', function (Silex\Application $app) {
  */
 $app->delete('/items/{itemId}', function (Silex\Application $app, $itemId) {
     
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+        exit;
+    }
+    
     $itemId = intval($itemId);
     $delete = $app['db']->delete('services', array('id' => $itemId));
     
@@ -104,6 +114,11 @@ $app->delete('/items/{itemId}', function (Silex\Application $app, $itemId) {
  * @returns string
  */
 $app->get('/items/data/{itemId}', function (Silex\Application $app, $itemId) {
+    
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+        exit;
+    }
     
     $itemId = trim($itemId);
     
@@ -124,6 +139,11 @@ $app->get('/items/data/{itemId}', function (Silex\Application $app, $itemId) {
 });
 
 $app->put('/items/update/{itemId}', function (Silex\Application $app, $itemId) {
+    
+    if( $app['session']->get('user_id') === null ){
+        $app->abort(403, "Request is not allowed.");
+        exit;
+    }
     
     $data = json_decode($app['request']->getContent(), true);
     
