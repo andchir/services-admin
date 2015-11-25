@@ -34,12 +34,19 @@ module.exports = function(grunt) {
                 src: 'js/dist/app_all.js',
                 dest: 'js/dist/app_all.min.js'
             }
+        },
+        watch: {
+            javascript: {
+                files: ['js/app.js','js/services.js','js/controllers/*'],
+                tasks: ['concat','uglify']
+            }
         }
     });
     
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-concat-css');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     
     grunt.registerTask('default', ['concat','uglify']);
     

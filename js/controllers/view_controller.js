@@ -74,7 +74,7 @@ app
          */
         ctlr.removeService = function(){
             
-            if ( confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + ctlr.data.selectedIdp + '?' ) ) {
+            var callback_func = function(){
                 
                 var result = ServiceItem.remove({ itemIdp: ctlr.data.selectedIdp });
                 result.$promise.then(function(data) {
@@ -84,7 +84,9 @@ app
                     ctlr.data.selectedIdp = null;
                 });
                 
-            }
+            };
+            
+            notie.confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + ctlr.data.selectedIdp + '?', 'Да', 'Нет', callback_func );
             
         };
         
