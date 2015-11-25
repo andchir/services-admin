@@ -64,29 +64,39 @@ app
                 }
                 ctlr.data.newIdp = null;
                 ctlr.data.newLogin = null;
+                notie.alert(1, 'Сервис добавлен.', 2);
+            },
+            function(e) {
+                notie.alert(3, 'Ошибка при создании нового сервиса.', 2);
             });
             
         };
         
         /**
          * Remove service
-         *
+         * @param {Number} index
          */
-        ctlr.removeService = function(){
+        ctlr.removeService = function( index ){
+            
+            var service = ctlr.data.servicesList[index];
             
             var callback_func = function(){
                 
-                var result = ServiceItem.remove({ itemIdp: ctlr.data.selectedIdp });
+                var result = ServiceItem.remove({ itemId: service.id });
                 result.$promise.then(function(data) {
                     if(data.success){
                         getServicesList();
                     }
                     ctlr.data.selectedIdp = null;
+                    notie.alert(1, 'Сервис удален.', 2);
+                },
+                function(e) {
+                    notie.alert(3, 'Ошибка при удалении сервиса.', 2);
                 });
                 
             };
             
-            notie.confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + ctlr.data.selectedIdp + '?', 'Да', 'Нет', callback_func );
+            notie.confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + service.idp + '?', 'Да', 'Нет', callback_func );
             
         };
         

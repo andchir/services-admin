@@ -27,7 +27,7 @@ angular.module('apiServices', ['ngResource'])
                 isArray: false
             },
             remove: {
-                url: 'app/items/:itemIdp',
+                url: 'app/items/:itemId',
                 method: 'DELETE'
             },
             update: {

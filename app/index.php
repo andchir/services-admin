@@ -83,10 +83,10 @@ $app->post('/items', function (Silex\Application $app) {
  * @param int $itemIdp
  * @returns string
  */
-$app->delete('/items/{itemIdp}', function (Silex\Application $app, $itemIdp) {
+$app->delete('/items/{itemId}', function (Silex\Application $app, $itemId) {
     
-    $itemIdp = trim($itemIdp);
-    $delete = $app['db']->delete('services', array('idp' => $itemIdp));
+    $itemId = intval($itemId);
+    $delete = $app['db']->delete('services', array('id' => $itemId));
     
     $result = array(
         'success' => $delete != false

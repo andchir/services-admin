@@ -359,7 +359,7 @@ angular.module('apiServices', ['ngResource'])
                 isArray: false
             },
             remove: {
-                url: 'app/items/:itemIdp',
+                url: 'app/items/:itemId',
                 method: 'DELETE'
             },
             update: {
@@ -402,7 +402,10 @@ app
 .controller('MainController', ['$route', '$routeParams', '$location',
     function($route, $routeParams, $location) {
         
-        
+        this.settings = {
+            createOpened: true,
+            searchOpened: true
+        };
         
     }
 ])
@@ -469,29 +472,39 @@ app
                 }
                 ctlr.data.newIdp = null;
                 ctlr.data.newLogin = null;
+                notie.alert(1, 'Сервис добавлен.', 2);
+            },
+            function(e) {
+                notie.alert(3, 'Ошибка при создании нового сервиса.', 2);
             });
             
         };
         
         /**
          * Remove service
-         *
+         * @param {Number} index
          */
-        ctlr.removeService = function(){
+        ctlr.removeService = function( index ){
+            
+            var service = ctlr.data.servicesList[index];
             
             var callback_func = function(){
                 
-                var result = ServiceItem.remove({ itemIdp: ctlr.data.selectedIdp });
+                var result = ServiceItem.remove({ itemId: service.id });
                 result.$promise.then(function(data) {
                     if(data.success){
                         getServicesList();
                     }
                     ctlr.data.selectedIdp = null;
+                    notie.alert(1, 'Сервис удален.', 2);
+                },
+                function(e) {
+                    notie.alert(3, 'Ошибка при удалении сервиса.', 2);
                 });
                 
             };
             
-            notie.confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + ctlr.data.selectedIdp + '?', 'Да', 'Нет', callback_func );
+            notie.confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + service.idp + '?', 'Да', 'Нет', callback_func );
             
         };
         
@@ -541,9 +554,14 @@ app
             var postData = angular.copy( ctlr.data.service );
             var result = ServiceItem.update( {itemId: ctlr.data.service.id }, postData );
             
-            result.$promise.then(function(data) {
-                $location.path('/').replace();
-            });
+            result.$promise
+                .then(function(data) {
+                    notie.alert(1, 'Данные успешно сохранены.', 2);
+                    $location.path('/').replace();
+                },
+                function(e) {
+                    notie.alert(3, 'Ошибка при сохранении.', 2);
+                });
             
         };
         

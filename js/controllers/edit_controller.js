@@ -44,9 +44,14 @@ app
             var postData = angular.copy( ctlr.data.service );
             var result = ServiceItem.update( {itemId: ctlr.data.service.id }, postData );
             
-            result.$promise.then(function(data) {
-                $location.path('/').replace();
-            });
+            result.$promise
+                .then(function(data) {
+                    notie.alert(1, 'Данные успешно сохранены.', 2);
+                    $location.path('/').replace();
+                },
+                function(e) {
+                    notie.alert(3, 'Ошибка при сохранении.', 2);
+                });
             
         };
         
