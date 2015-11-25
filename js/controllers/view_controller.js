@@ -96,7 +96,7 @@ app
                 
             };
             
-            notie.confirm( 'Вы уверены, что хотите удалить сервисы с IDP ' + service.idp + '?', 'Да', 'Нет', callback_func );
+            notie.confirm( 'Вы уверены, что хотите удалить сервис с IDP ' + service.idp + '?', 'Да', 'Нет', callback_func );
             
         };
         

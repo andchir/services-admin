@@ -1,38 +1,49 @@
 
-<form id="addForm" name="addForm" role="form" action="" method="post">
-    
-    <h5>
-        Добавить новый сервис
-        &nbsp;
-        <a href="" class="btn btn-default btn-xs" ng-click="main.settings.createOpened=!main.settings.createOpened">
-            <i class="glyphicon glyphicon-chevron-up" ng-class="{'glyphicon-chevron-up':main.settings.createOpened, 'glyphicon-chevron-down':!main.settings.createOpened}"></i>
-        </a>
-    </h5>
-    
-    <div class="row" ng-show="main.settings.createOpened">
+<div class="panel panel-default">
+    <div class="panel-heading">
         
-        <div class="col-md-3 form-group">
+        <h3 class="panel-title">
             
-            <label class="control-label" for="createFormInputIDP">IDP:</label>
-            <input type="number" class="form-control" id="createFormInputIDP" name="newIdp" ng-model="view.data.newIdp" required>
+            Добавить новый сервис
             
-        </div>
-        <div class="col-md-3 form-group">
-            
-            <label class="control-label" for="createFormInputLogin">Login:</label>
-            <input type="text" class="form-control" id="createFormInputLogin" name="newLogin" ng-model="view.data.newLogin" required>
-            
-        </div>
-        <div class="col-md-3 form-group md-without-label">
-            
-            <button type="button" class="btn btn-primary" ng-disabled="!addForm.$valid" ng-click="view.addService()">Создать</button>
-            
-        </div>
+            <div class="pull-right">
+                
+                <a href="" class="btn btn-default btn-xs" ng-click="main.settings.createOpened=!main.settings.createOpened">
+                    <i class="glyphicon glyphicon-chevron-up" ng-class="{'glyphicon-chevron-up':main.settings.createOpened, 'glyphicon-chevron-down':!main.settings.createOpened}"></i>
+                </a>
+                
+            </div>
+        </h3>
         
     </div>
-</form>
-
-<hr>
+    <div class="panel-body" ng-show="main.settings.createOpened">
+        
+        <form id="addForm" name="addForm" role="form" action="" method="post">
+            <div class="row">
+                
+                <div class="col-md-3 form-group">
+                    
+                    <label class="control-label" for="createFormInputIDP">IDP:</label>
+                    <input type="number" class="form-control" id="createFormInputIDP" name="newIdp" ng-model="view.data.newIdp" required>
+                    
+                </div>
+                <div class="col-md-3 form-group">
+                    
+                    <label class="control-label" for="createFormInputLogin">Login:</label>
+                    <input type="text" class="form-control" id="createFormInputLogin" name="newLogin" ng-model="view.data.newLogin" required>
+                    
+                </div>
+                <div class="col-md-3 form-group md-without-label">
+                    
+                    <button type="button" class="btn btn-primary" ng-disabled="!addForm.$valid" ng-click="view.addService()">Создать</button>
+                    
+                </div>
+                
+            </div>
+        </form>
+        
+    </div>
+</div>
 
 <form id="searchForm" role="form" action="" method="post">
     
