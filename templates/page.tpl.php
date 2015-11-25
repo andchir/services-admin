@@ -13,7 +13,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script src="js/dist/app_all.js"></script>
+    <script src="js/dist/app_all.min.js"></script>
     
 </head>
 <body ng-app="servicesApp">

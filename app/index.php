@@ -33,6 +33,7 @@ $app->get('/items/{page}', function (Silex\Application $app, $page) {
     $qb = $app['db']->createQueryBuilder()
         ->select('*')
         ->from('services')
+        ->orderBy('id', 'DESC')
         ->setFirstResult($pageSize * ($page - 1))
         ->setMaxResults($pageSize);
     $data = $qb->execute()->fetchAll();
